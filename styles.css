@@ -1,0 +1,233 @@
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --light-bg: #f8f9fa;
+    --dark-bg: #1a1a1a;
+    --light-text: #f8f9fa;
+    --dark-text: #333;
+    --card-bg-light: #ffffff;
+    --card-bg-dark: #2c2c2c;
+    --border-light: #e9ecef;
+    --border-dark: #444;
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    transition: var(--transition);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+}
+
+body.light-mode {
+    background-color: var(--light-bg);
+    color: var(--dark-text);
+}
+
+body.dark-mode {
+    background-color: var(--dark-bg);
+    color: var(--light-text);
+}
+
+nav.navbar {
+    background-color: var(--light-bg);
+    padding: 15px 0;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+}
+
+nav.navbar a.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+nav.navbar .nav-link {
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+}
+
+nav.navbar .nav-link:hover {
+    color: var(--secondary-color);
+}
+
+.hero-section {
+    background-color: var(--light-bg);
+    padding: 100px 0;
+    text-align: center;
+}
+
+.hero-section .hero-image img {
+    max-width: 300px;
+    border-radius: 50%;
+}
+
+.hero-section h1 {
+    font-weight: 700;
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.hero-section .social-links a {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-right: 15px;
+    transition: color 0.3s ease;
+}
+
+.hero-section .social-links a:hover {
+    color: var(--secondary-color);
+}
+
+#about {
+    background-color: var(--light-bg);
+    padding: 80px 0;
+}
+
+#about .section-title h6 {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+#about .section-title h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+#about .skills-card {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+#about .skills-card:hover {
+    transform: translateY(-5px);
+}
+
+#about .skills-card i {
+    font-size: 2rem;
+    color: var(--secondary-color);
+}
+
+.skills-card {
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    background: white;
+    transition: var(--transition);
+}
+
+.skills-card:hover {
+    transform: translateY(-5px);
+}
+
+.skills-card h4 {
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+.skills-card .skill-item {
+    margin-bottom: 15px;
+}
+
+.skills-card .progress-bar {
+    background-color: var(--secondary-color);
+}
+
+.project-card {
+    padding: 25px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    transition: var(--transition);
+    background: white;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+.project-card h4 {
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+.project-card .project-image img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.project-tags .badge {
+    background-color: var(--secondary-color);
+    margin-right: 10px;
+    color: white;
+}
+
+.form-control {
+    border: 2px solid #e9ecef;
+    padding: 12px;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.form-control:focus {
+    border-color: var(--secondary-color);
+    box-shadow: none;
+}
+
+.dark-mode .form-control {
+    background: #2c2c2c;
+    border-color: #444;
+    color: var(--light-text);
+}
+
+footer {
+    background-color: var(--primary-color);
+    color: var(--light-text);
+    padding: 20px 0;
+}
+
+footer .btn-social {
+    background-color: transparent;
+    color: var(--light-text);
+    border: 1px solid var(--light-text);
+    transition: var(--transition);
+}
+
+footer .btn-social:hover {
+    background-color: var(--secondary-color);
+    color: var(--dark-text);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animated {
+    animation: fadeIn 0.8s ease forwards;
+}
+
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+
+    .hero-section .social-links {
+        margin-top: 20px;
+    }
+
+    .project-card, .skills-card {
+        margin-bottom: 15px;
+    }
+
+    .section-title h2 {
+        font-size: 1.75rem;
+    }
+}
