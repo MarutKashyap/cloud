@@ -1,0 +1,97 @@
+# 1. Update and Install MySQL on EC2 (Ubuntu)
+sudo apt update
+sudo apt install mysql-server -y
+sudo systemctl start mysql
+sudo mysql_secure_installation
+
+# 2. Login to MySQL
+sudo mysql -u root -p
+
+# 3. SQL Commands for Database Setup and Tasks
+CREATE DATABASE bank_db;
+USE bank_db;
+
+CREATE TABLE customers (
+  customer_id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  email VARCHAR(100),
+  phone VARCHAR(15)
+);
+
+CREATE TABLE accounts (
+  account_id INT AUTO_INCREMENT PRIMARY KEY,
+  customer_id INT,
+  account_type VARCHAR(20),
+  balance DECIMAL(10,2),
+  FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+
+CREATE TABLE transactions (
+  transaction_id INT AUTO_INCREMENT PRIMARY KEY,
+  account_id INT,
+  type VARCHAR(10),
+  amount DECIMAL(10,2),
+  timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (account_id) REFERENCES accounts(account_id)
+);
+
+# 4. Insert Sample Records
+INSERT INTO customers (name, email, phone) VALUES
+  ('Alice', 'alice@mail.com', '9100000001'),
+  ('Bob', 'bob@mail.com', '9100000002'),
+  ('Charlie', 'charlie@mail.com', '9100000003'),
+  ('David', 'david@mail.com', '9100000004'),
+  ('Eva', 'eva@mail.com', '9100000005');
+
+INSERT INTO accounts (customer_id, account_type, balance) VALUES
+  (1, 'Savings', 5000.00),
+  (2, 'Checking', 1500.00),
+  (3, 'Savings', 2000.00),
+  (4, 'Checking', 3000.00),
+  (5, 'Savings', 7000.00);
+
+# 5. 10 SQL Queries (Examples)
+-- 1. List all customers
+SELECT * FROM customers;
+
+-- 2. Show accounts and owners
+SELECT a.account_id, c.name, a.balance FROM accounts a JOIN customers c ON a.customer_id = c.customer_id;
+
+-- 3. Insert deposit transaction
+INSERT INTO transactions (account_id, type, amount) VALUES (1, 'Deposit', 1000.00);
+
+-- 4. Withdraw funds
+INSERT INTO transactions (account_id, type, amount) VALUES (1, 'Withdraw', 500.00);
+
+-- 5. Transaction history for account 1
+SELECT * FROM transactions WHERE account_id = 1;
+
+-- 6. Update account balance after deposit
+UPDATE accounts SET balance = balance + 1000 WHERE account_id = 1;
+
+-- 7. Update balance after withdrawal
+UPDATE accounts SET balance = balance - 500 WHERE account_id = 1;
+
+-- 8. Total deposits per account
+SELECT account_id, SUM(amount) FROM transactions WHERE type = 'Deposit' GROUP BY account_id;
+
+-- 9. Customer with highest balance
+SELECT c.name, a.balance FROM customers c JOIN accounts a ON c.customer_id = a.customer_id ORDER BY a.balance DESC LIMIT 1;
+
+-- 10. Monthly transaction summary
+SELECT MONTH(timestamp) as Month, COUNT(*) as Transactions FROM transactions GROUP BY Month;
+
+# 6. Create Trigger for Transaction Logging
+CREATE TABLE transaction_log (
+  log_id INT AUTO_INCREMENT PRIMARY KEY,
+  transaction_id INT,
+  log_time DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TRIGGER after_transaction_insert
+AFTER INSERT ON transactions
+FOR EACH ROW
+INSERT INTO transaction_log (transaction_id) VALUES (NEW.transaction_id);
+
+# 7. Backup the Database (exit MySQL, then run in terminal)
+mysqldump -u root -p bank_db > /home/ubuntu/bank_db_backup.sql
